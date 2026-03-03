@@ -1,0 +1,26 @@
+{
+    "Species": "[Fe XIV]",
+    "Rest_wavelength": 5297.7,
+    
+    "Simulated_spectra_parameters": {
+        "xmin": 320,
+        "xmax": 681,
+        "lambda_min": 5200,
+        "lambda_max": 5450,
+        "lambda": 5300,
+        "Amplitude": 10,
+        "Amplitude1": 30,
+        "Amplitude2": 20,
+        "noise": 5
+    },
+
+    "Actual_model_fit_parameters": {
+        "Separation_lambda": 5315,
+        "Amplitude1": 0,
+        "mu1": 5225,
+        "sigma1": 15,
+        "Amplitude2": 0,
+        "mu2": 5365,
+        "sigma2": 15
+    }
+}

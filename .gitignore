@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# FITS data
+*.fits
+
+# Large ML models
+*.h5
+*.keras
+
+# OneDrive temp files
+~$*
