@@ -361,7 +361,7 @@ def fit_curve(fits_file, params_file, x_start, x_final, y_start, y_final, plot_a
     n=data["Simulated_spectra_parameters"]["noise"]
     lambdao=data["Rest_wavelength"]
 
-    n_samples = 1000               # Total number of synthetic spectra to generate for training
+    n_samples = 100000               # Total number of synthetic spectra to generate for training
     X_synthetic = []
     y_synthetic = []
     y_pos=[]
@@ -412,7 +412,7 @@ def fit_curve(fits_file, params_file, x_start, x_final, y_start, y_final, plot_a
     # Vectorized batch processing with ProcessPoolExecutor for faster execution. We will divide the pixels into batches and process each batch in parallel.
     # The batch_process function will handle the processing of each batch and return the results, which we will then aggregate into the final blueshift and redshift arrays.
 
-    batch_size = 50  # Adjust this based on your system's capabilities
+    batch_size = 20  # Adjust this based on your system's capabilities
     pixel_batches = [pixels[i:i + batch_size] for i in range(0, len(pixels), batch_size)]
 
     with ProcessPoolExecutor() as executor:
