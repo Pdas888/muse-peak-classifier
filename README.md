@@ -37,3 +37,4 @@ See `requirements.txt`
 ## Usage
 
 Modify the parameters in the main section of `fit_curve`.
+run python run_ml.py --fits_file --params_file params_sulphur.json --x_start 0 --x_end 200 --y_start 0 --y_end 200
