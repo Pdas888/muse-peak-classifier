@@ -43,4 +43,5 @@ Use .json file to define simulation and detection parameters. Copy or edit the v
 The code is not tested on narrow emission lines or any absorption lines. However, I believe the code can classify and detect two narrow lines if the sigma values (width of the lines) are adjusted accordingly
 
 use below in bash:
-python run_ml.py --fits_file --params_file params_sulphur.json --x_start 0 --x_end 200 --y_start 0 --y_end 200
+python run_ml.py --fits_file your_file.fits --params_file params_sulphur.json --x_start 0 --x_end 200 --y_start 0 --y_end 200
+
