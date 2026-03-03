@@ -23,6 +23,7 @@ import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from detect_peak_v2 import implement_inn, simulate_spectrum
 import os
+import argparse
 import json
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, classification_report,confusion_matrix, accuracy_score
@@ -429,23 +430,53 @@ def fit_curve(fits_file, params_file, x_start, x_final, y_start, y_final, plot_a
                 red_width[j, i]=red_vw
     return blueshift, redshift,blue_brightness, red_brightness, blue_width, red_width
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(
+        description="Multitask Neural Network Spectral Peak Fitting"
+    )
+
+    parser.add_argument("--fits_file", type=str, required=True,
+                        help="Path to input FITS cube")
+
+    parser.add_argument("--params_file", type=str, required=True,
+                        help="Path to parameter JSON file")
+
+    parser.add_argument("--x_start", type=int, required=True)
+    parser.add_argument("--x_end", type=int, required=True)
+    parser.add_argument("--y_start", type=int, required=True)
+    parser.add_argument("--y_end", type=int, required=True)
+
+    parser.add_argument("--plot_all", action="store_true")
+    parser.add_argument("--load_file", action="store_true")
+
+    args = parser.parse_args()
+
+    os.makedirs("outputs", exist_ok=True)
+
     start_time = time.time()
-    fits_file = "C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/FITS_files_0509-67.5/gauss_smooth.fits"
-    params_file = "C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/params_sulphur.json"
 
-    #blueshift, redshift= fit_curve(fits_file,params_file, 147,162,94,104)
-    #blueshift, redshift = fit_curve(fits_file, params_file,  210,250,90,250)
-    blueshift, redshift, sb_b, sb_r, vw_b, vw_r = fit_curve(fits_file, params_file, 109, 111, 140,142, plot_all=True, load_file=True)
+    blueshift, redshift, sb_b, sb_r, vw_b, vw_r = fit_curve(
+        args.fits_file,
+        args.params_file,
+        args.x_start,
+        args.x_end,
+        args.y_start,
+        args.y_end,
+        plot_all=args.plot_all,
+        load_file=args.load_file
+    )
 
-    #blueshift, redshift = fit_curve(fits_file, params_file,  120,124,168,172)
-    end_time = time.time()     # stop timing
-    print(f"\n Completed in {end_time - start_time:.2f} seconds!")
+    end_time = time.time()
+    print(f"\nCompleted in {end_time - start_time:.2f} seconds!")
 
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/blueshift00_S.npy', blueshift)
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/redshift00_S.npy', redshift)
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/blueshifted00_S_sb.npy', sb_b)
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/redshift00_S_sb.npy', sb_r)
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/blueshifted00_S_width.npy', vw_b)
-    np.save('C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/redshift00_S_width.npy', vw_r)
+    np.save("outputs/blueshift.npy", blueshift)
+    np.save("outputs/redshift.npy", redshift)
+    np.save("outputs/blueshift_sb.npy", sb_b)
+    np.save("outputs/redshift_sb.npy", sb_r)
+    np.save("outputs/blueshift_width.npy", vw_b)
+    np.save("outputs/redshift_width.npy", vw_r)
+
+
+if __name__ == "__main__":
+    main()
 
