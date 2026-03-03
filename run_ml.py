@@ -22,7 +22,7 @@ import time
 #from astropy.wcs import WCS
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from detect_peak_v2 import implement_inn, simulate_spectrum
-
+import os
 import json
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, classification_report,confusion_matrix, accuracy_score
@@ -39,7 +39,8 @@ import matplotlib.pyplot as plt
 # Total spectral bins = 3721
 t = np.array([4699.95654296875 + i * 1.25 for i in range(1, 3722)])
 # Log file to record discarded spectra/pixels during preprocessing
-discard_log = open("C:/Users/z5391280/OneDrive - UNSW/Desktop/PhD/MUSE/my_reduction/ML peak detection/Peak classifier/logs/discarded_pixels_S00.log", "a")
+os.makedirs("logs", exist_ok=True)
+discard_log = open("logs/discarded_pixels.log", "a")
 
 
 def neural_model_multitask(X_train, y_train_cls, y_train_pos, X_test, y_test_cls, y_test_pos, lambda_max,lambda_min):
