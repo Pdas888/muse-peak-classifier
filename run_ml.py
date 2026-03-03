@@ -328,9 +328,8 @@ def fit_curve(fits_file, params_file, x_start, x_final, y_start, y_final, plot_a
         Values are nan for pixels where the corresponding peak is not present or the prediction is invalid.
     
     """
-    img3 = fits.open(fits_file)
-    result = img3[0].data
-    img3.close()
+    with fits.open(fits_file) as hdul:
+        result = next(hdu.data for hdu in hdul if hdu.data is not None)
     clone = result
     rows, cols = clone.shape[1], clone.shape[2]
     if load_file:
